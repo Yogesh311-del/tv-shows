@@ -9,12 +9,11 @@ function MainScreen() {
       try {
         const responses = await Promise.all([
           fetch('https://api.tvmaze.com/search/shows?q=all'),
-         
         ]);
 
         const data = await Promise.all(responses.map(response => response.json()));
 
-        setShows(data.flat()); 
+        setShows(data.flat());
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -31,7 +30,8 @@ function MainScreen() {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     backgroundColor: 'cornflowerblue',
     display: 'flex',
-
+    flexDirection: 'column',
+    alignItems: 'center',
   };
 
   const buttonStyle = {
@@ -42,25 +42,24 @@ function MainScreen() {
     borderRadius: '4px',
     cursor: 'pointer',
     transition: 'background-color 0.3s',
+    marginTop: '10px',
   };
 
   const buttonHoverStyle = {
     backgroundColor: '#0056b3',
   };
 
-
- 
   return (
-    <div style={{ display:'flex', flexDirection: 'column'}}>
-    <div style={{backgroundColor: 'grey'}}>
-      <h1 style={{ textAlign: 'center' }}>All Shows</h1>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ backgroundColor: 'grey', width: '100%', textAlign: 'center' }}>
+        <h1>All Shows</h1>
       </div>
-      <ul style={{height: '450px', width: '300px' }}>
+      <ul style={{ padding: 0, width: '100%' }}>
         {shows.map(({ show }) => (
-          <li key={show.id} style={listItemStyle}>
-            <Link to={`/show/${show.id}`} style={{alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
-                  <div style={{height: '450px', width: '200px'}}>
-                {show.image && <img src={show.image.medium} alt={show.name} style={{  width: '150px',height: '200px', borderRadius: '8px' }} />}
+          <li key={show.id} style={{ ...listItemStyle, maxWidth: '300px', margin: '0 auto' }}>
+            <Link to={`/show/${show.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div style={{ textAlign: 'center' }}>
+                {show.image && <img src={show.image.medium} alt={show.name} style={{ width: '100%', borderRadius: '8px' }} />}
                 <h2>{show.name}</h2>
                 <p>Type: {show.type}</p>
                 <p>Genres: {show.genres.join(', ')}</p>
